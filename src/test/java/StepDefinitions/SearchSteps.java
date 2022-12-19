@@ -1,10 +1,14 @@
 package StepDefinitions;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
@@ -28,10 +32,15 @@ public class SearchSteps extends DriverUtils {
 	}
 
 	@Given("Google application is launched")
-	public void google_application_is_launched() {
+	public void google_application_is_launched() throws IOException {
 		System.out.println("Driver in search steps:" + driver);
 		driver.navigate().to("https://www.google.com");
 		System.out.println("Launching google applications");
+		TakesScreenshot scrShot =((TakesScreenshot)driver);
+		File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(SrcFile, new File("./src/test/resources/report/image.png"));
+		System.out.println("Screen captured");
+
 	}
 
 	@When("I see the search field and enter data in it")
