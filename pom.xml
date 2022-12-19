@@ -47,10 +47,19 @@
 </dependency>
 <!-- https://mvnrepository.com/artifact/io.cucumber/gherkin -->
 <dependency>
+
     <groupId>io.cucumber</groupId>
     <artifactId>gherkin</artifactId>
     <version>3.2.0</version>
 </dependency>
+<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-jvm -->
+<dependency>
+    <groupId>io.cucumber</groupId>
+    <artifactId>cucumber-jvm</artifactId>
+    <version>7.2.3</version>
+    <type>pom</type>
+</dependency>
+
 <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
 <dependency>
     <groupId>org.seleniumhq.selenium</groupId>
