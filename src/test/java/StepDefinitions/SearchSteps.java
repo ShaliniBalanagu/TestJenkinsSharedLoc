@@ -53,8 +53,9 @@ public class SearchSteps extends DriverUtils {
 			throws NumberFormatException, IOException, FilloException {
 		System.out.println("Entered step,row num is:"+rowNum);
 		Helper helper = new Helper();
-		
-		  List<Map<String, String>> data = helper.readDataFromExcel("Sheet1",Integer.parseInt(rowNum)); 
+		System.out.println("Excel path is:"+System.getProperty("excelPath"));
+
+		  List<Map<String, String>> data = helper.readDataFromExcel("Sheet1",Integer.parseInt(rowNum),System.getProperty("excelPath")); 
 		  System.out.println("Data read"); 
 		  Map<String,String> txt = data.get(Integer.parseInt(rowNum));
 		  searchPage.inputSearch.sendKeys(txt.get("Name") + Keys.ENTER);

@@ -25,23 +25,35 @@ import com.codoid.products.fillo.Recordset;
 public class Helper {
 
 	public void copyFile(String source,String destination) throws IOException {
+		System.out.println("Entered copyFile");
+		try {
 		File src=new File(source);
 		File dest=new File(destination);
 		FileUtils.copyToDirectory(src, dest);
 		System.out.println("Copied file from "+source+" to "+destination);
-	}
-	
-	public List<Map<String,String>> readDataFromExcel(String sheetname,int rowNo) throws IOException {
-		
-		File file=new File("./src/test/resources/DataFiles/SampleTest_1.xlsx");
-		if(file.delete()) {
-			System.out.println("File deleted");
-		}else
-		{
-			System.out.println("Failed to delete file");
+		}catch(Exception e) {
+			System.out.println("failed to copy file:"+e.getMessage());
 		}
-		
-		copyFile("D://AttraData//Projects//Data Files//SampleTest_1.xlsx","./src/test/resources/DataFiles");
+	}
+
+	public List<Map<String,String>> readDataFromExcel(String sheetname,int rowNo,String excelPath) throws IOException {
+
+		File file=new File("./src/test/resources/DataFiles/SampleTest_1.xlsx");
+		System.out.println("File initialized");
+		try {
+			if(file.exists()) {
+				file.delete();
+				System.out.println("File deleted");
+			}else
+			{
+				System.out.println("File is not available");
+			}
+		}catch(Exception e) {
+			System.out.println("Failed in deleting excel file-Exception is:"+e.getMessage());
+		}
+		//copyFile("D://AttraData//Projects//Data Files//SampleTest_1.xlsx","./src/test/resources/DataFiles");
+		copyFile(excelPath,"./src/test/resources/DataFiles");
+
 		System.out.println("File copied");
 		FileInputStream fis=new FileInputStream("./src/test/resources/DataFiles/SampleTest_1.xlsx");
 		XSSFWorkbook workbook=new XSSFWorkbook(fis);
@@ -53,24 +65,24 @@ public class Helper {
 		List<Map<String,String>> excelRows=new ArrayList<Map<String,String>>();
 		HashMap<String,String> data=new HashMap<String,String>();
 		try {
-		for(int j=0;j<rowCount;j++) {
-			for(int i=0;i<row.getLastCellNum();i++) {
-				System.out.println("i value:"+i);
-				String key=header.getCell(i).toString();
-				String value=row.getCell(i).toString();
-				System.out.println("Key:"+key+"--Value:"+value);
-				data.put(key, value);
+			for(int j=0;j<rowCount;j++) {
+				for(int i=0;i<row.getLastCellNum();i++) {
+					System.out.println("i value:"+i);
+					String key=header.getCell(i).toString();
+					String value=row.getCell(i).toString();
+					System.out.println("Key:"+key+"--Value:"+value);
+					data.put(key, value);
+				}
+				excelRows.add(data);
 			}
-			excelRows.add(data);
-		}
 		}catch(Exception e) {
 			System.out.println("Exception ---->"+e.getMessage());
 		}
 		fis.close();
 		return excelRows;
-				
+
 	}
-	
+
 	public Connection connection;
 	public Recordset readExcelFillo(String sheetname,int rowNum) throws FilloException, IOException {
 		File file=new File("src/test/resources/DataFiles/SampleTest.xls");
@@ -80,17 +92,17 @@ public class Helper {
 		{
 			System.out.println("Failed to delete file");
 		}
-		
+
 		copyFile("D://AttraData//Projects//Data Files//SampleTest.xls","src/test/resources/DataFiles");
 		System.out.println("File copied");
-		
+
 		Fillo fillo=new Fillo();
 		String query="SELECT * FROM "+sheetname+" where Sno="+rowNum;
 		//connection=fillo.getConnection("D://AttraData//Projects//Data Files//SampleTest.xlsx");
 		connection=fillo.getConnection("src/test/resources/DataFiles/SampleTest.xls");
 		Recordset recordset = null;
 		try {
-		 recordset=connection.executeQuery("Select * from Sheet1 where Sno=1");
+			recordset=connection.executeQuery("Select * from Sheet1 where Sno=1");
 		}catch(Exception e) {
 			System.out.println("Exception in recordset:"+e.getMessage());
 		}
@@ -99,9 +111,9 @@ public class Helper {
 			System.out.println(recordset.getField("Sno")+" "+recordset.getField("Name"));
 		}
 		return recordset;
-		
+
 	}
-	
+
 	public Object[] readExcelDatausingFillo() throws FilloException {
 		Fillo fillo=new Fillo();
 		Object[] object=null;
@@ -132,18 +144,18 @@ public class Helper {
 		connection.close();
 		return object;
 	}
-	
-	
+
+
 	public static HashMap<String,HashMap<String,String>> readExcelDataToHashMap(String filepath) throws FileNotFoundException
 	{
 		FileInputStream file=new FileInputStream(filepath);
 		//Workbook wb=new WorkbookFactory.create(file);
-		
-		
-		
+
+
+
 		return null;
-		
+
 	}
-	
-	
+
+
 }
