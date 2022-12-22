@@ -42,7 +42,7 @@ public class Helper {
 		System.out.println("File initialized");
 		try {
 			if(file.exists()) {
-				file.delete();
+				//file.delete();
 				System.out.println("File deleted");
 			}else
 			{
@@ -83,6 +83,44 @@ public class Helper {
 
 	}
 
+	
+	public List<Map<String,String>> readDataFromExcel_Test(String sheetname,int rowNo) throws IOException {
+
+		
+		//copyFile("D://AttraData//Projects//Data Files//SampleTest_1.xlsx","./src/test/resources/DataFiles");
+		//copyFile(excelPath,"./src/test/resources/DataFiles");
+
+		System.out.println("File copied");
+		FileInputStream fis=new FileInputStream("./src/test/resources/DataFiles/SampleTest_1.xlsx");
+		XSSFWorkbook workbook=new XSSFWorkbook(fis);
+		XSSFSheet sheet =workbook.getSheet(sheetname);
+		Row header=sheet.getRow(0);
+		Row row=sheet.getRow(rowNo);
+		int rowCount=sheet.getLastRowNum();
+		System.out.println("Rows count:"+rowCount);
+		List<Map<String,String>> excelRows=new ArrayList<Map<String,String>>();
+		HashMap<String,String> data=new HashMap<String,String>();
+		try {
+			for(int j=0;j<rowCount;j++) {
+				for(int i=0;i<row.getLastCellNum();i++) {
+					System.out.println("i value:"+i);
+					String key=header.getCell(i).toString();
+					String value=row.getCell(i).toString();
+					System.out.println("Key:"+key+"--Value:"+value);
+					data.put(key, value);
+				}
+				excelRows.add(data);
+			}
+		}catch(Exception e) {
+			System.out.println("Exception ---->"+e.getMessage());
+		}
+		fis.close();
+		return excelRows;
+
+	}
+	
+	
+	
 	public Connection connection;
 	public Recordset readExcelFillo(String sheetname,int rowNum) throws FilloException, IOException {
 		File file=new File("src/test/resources/DataFiles/SampleTest.xls");

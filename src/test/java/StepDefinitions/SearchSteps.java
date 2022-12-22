@@ -36,10 +36,12 @@ public class SearchSteps extends DriverUtils {
 		System.out.println("Driver in search steps:" + driver);
 		driver.navigate().to("https://www.google.com");
 		System.out.println("Launching google applications");
-		TakesScreenshot scrShot =((TakesScreenshot)driver);
-		File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(SrcFile, new File("./src/test/resources/report/image.png"));
-		System.out.println("Screen captured");
+		/*
+		 * TakesScreenshot scrShot =((TakesScreenshot)driver); File
+		 * SrcFile=scrShot.getScreenshotAs(OutputType.FILE); FileUtils.copyFile(SrcFile,
+		 * new File("./src/test/resources/report/image.png"));
+		 * System.out.println("Screen captured");
+		 */
 
 	}
 
@@ -63,8 +65,13 @@ public class SearchSteps extends DriverUtils {
 		System.out.println("Entered step,row num is:"+rowNum);
 		Helper helper = new Helper();
 		System.out.println("Excel path is:"+System.getProperty("excelPath"));
+ //String excelpath="https://attragroup.sharepoint.com/:x:/r/sites/SynchronyAutomationDocuments/_layouts/15/Doc.aspx?sourcedoc=%7B9B76DE72-0C89-4BA4-B44E-CC9A302B822F%7D&file=Extended%20SME%20Tracker.xlsx&action=default&mobileredirect=true";
+ //List<Map<String, String>> data = helper.readDataFromExcel("Sheet1",Integer.parseInt(rowNum),"./src/test/resources/SampleTest_1.xlsx"); 
 
-		  List<Map<String, String>> data = helper.readDataFromExcel("Sheet1",Integer.parseInt(rowNum),System.getProperty("excelPath")); 
+ List<Map<String, String>> data = helper.readDataFromExcel_Test("Sheet1",Integer.parseInt(rowNum)); 
+
+ 
+ //List<Map<String, String>> data = helper.readDataFromExcel("Sheet1",Integer.parseInt(rowNum),System.getProperty("excelPath")); 
 		  System.out.println("Data read"); 
 		  Map<String,String> txt = data.get(Integer.parseInt(rowNum));
 		  searchPage.inputSearch.sendKeys(txt.get("Name") + Keys.ENTER);
