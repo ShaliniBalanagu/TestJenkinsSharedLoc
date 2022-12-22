@@ -91,7 +91,7 @@ public class Helper {
 		//copyFile(excelPath,"./src/test/resources/DataFiles");
 
 		System.out.println("File copied");
-		FileInputStream fis=new FileInputStream("./src/test/resources/DataFiles/SampleTest_1.xlsx");
+		FileInputStream fis=new FileInputStream("./src/test/resources/DataFiles/SampleTest_2.xlsx");
 		XSSFWorkbook workbook=new XSSFWorkbook(fis);
 		XSSFSheet sheet =workbook.getSheet(sheetname);
 		Row header=sheet.getRow(0);
