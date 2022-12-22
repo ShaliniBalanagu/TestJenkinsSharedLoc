@@ -90,7 +90,7 @@ public class Helper {
 		//copyFile("D://AttraData//Projects//Data Files//SampleTest_1.xlsx","./src/test/resources/DataFiles");
 		//copyFile(excelPath,"./src/test/resources/DataFiles");
 
-		System.out.println("File copied");
+		System.out.println("Entered readDataFromExcel_Test");
 		FileInputStream fis=new FileInputStream("./src/test/resources/DataFiles/SampleTest_2.xlsx");
 		XSSFWorkbook workbook=new XSSFWorkbook(fis);
 		XSSFSheet sheet =workbook.getSheet(sheetname);
